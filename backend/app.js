@@ -1,6 +1,20 @@
+const mongoose = require('mongoose')
 const express = require('express')
-
 const app = express()
+
+mongoose.connect('mongodb+srv://mymy:VXBqdrIWX6f87doJ@orkeacluster1.ha2oryp.mongodb.net/?retryWrites=true&w=majority&appName=OrkeaCluster1',
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }
+)
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+// Gestion des requêtes POST
+app.use(express.json())
+
+
 // Middleware autorisant l'acces CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
@@ -8,8 +22,15 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
     next()
 })
+//Middleware POST
+app.post("/api/stuff", (req, res, next) => {
+    console.log(req.body)
+    res.status(201).json({
+        message: "Objet crée !"
+    })
+})
 // Middleware des objets (route comprise)
-app.use('/api/stuff', (req, res, next) => {
+app.get('/api/stuff', (req, res, next) => {
     const stuff = [
         {
             _id: 'oeihfzeoi',
