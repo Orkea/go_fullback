@@ -13,7 +13,7 @@ exports.signUp =(req, res, next) => {
         user.save()
         .then(() =>{
 
-            console.log(" Utilisateur créé")
+            console.log(user)
           return  res.status(201).json({message: "Utilisateur créé ! "})
         } )
             
@@ -44,8 +44,8 @@ exports.logIn = (req, res, next) =>{
                         userId: user._id,
                         token : jwt.sign(
                             { userId : user._id},
-                            "RAMDOM_TOKEN_SECRET",
-                            { expiresIn : "24h"}
+                            'RAMDOM_TOKEN_SECRET',
+                            { expiresIn : '24h'}
                         )
                     })
                 }
